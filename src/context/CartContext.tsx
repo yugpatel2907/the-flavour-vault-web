@@ -12,7 +12,7 @@ interface CartContextType {
   cart: CartItem[];
   addToCart: (item: MenuItem) => void;
   removeFromCart: (itemId: string) => void;
-  updateQuantity: (itemId: string, delta: number) => void;
+  updateQuantity: (itemId: string, nextQuantity: number) => void;
   clearCart: () => void;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
@@ -43,13 +43,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCart((prev) => prev.filter((i) => i.menuItem.id !== itemId));
   };
 
-  const updateQuantity = (itemId: string, delta: number) => {
+  const updateQuantity = (itemId: string, nextQuantity: number) => {
     setCart((prev) => {
       return prev
         .map((i) => {
           if (i.menuItem.id === itemId) {
-            const newQty = i.quantity + delta;
-            return newQty > 0 ? { ...i, quantity: newQty } : null;
+            const safeQty = Math.max(0, nextQuantity);
+            return safeQty > 0 ? { ...i, quantity: safeQty } : null;
           }
           return i;
         })

@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ambrociaMenu, menuCategories, MenuItem } from '@/data/ambrociaMenu';
+import { menuCategories, MenuItem } from '@/data/ambrociaMenu';
+import { useMenu } from '@/lib/useMenu';
 import AuthenticMenuCardView from './AuthenticMenuCardView';
 import { useCart } from '@/context/CartContext';
 import { Search, Plus, Flame, Leaf, Phone, LayoutGrid, FileText, Check } from 'lucide-react';
@@ -14,6 +15,7 @@ export default function MenuSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const [addedId, setAddedId] = useState<string | null>(null);
   const { addToCart } = useCart();
+  const { menu } = useMenu();
 
   const handleAdd = (item: MenuItem) => {
     audioSynthesizer.playSizzle();
@@ -22,7 +24,7 @@ export default function MenuSection() {
     setTimeout(() => setAddedId(null), 1500);
   };
 
-  const filteredMenu = ambrociaMenu.filter((item) => {
+  const filteredMenu = menu.filter((item) => {
     const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
     const filterMatch =
       filterType === 'all' ||

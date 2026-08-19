@@ -80,14 +80,14 @@ export default function HeroSection({ onOpenAI, onOpenTracker }: HeroSectionProp
           {/* Ambient Glow behind title */}
           <div className="absolute inset-0 bg-radial-gradient from-saffron/20 via-gold/10 to-transparent blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
           
-          <h1 className="relative font-serif text-6xl sm:text-8xl lg:text-[10rem] font-black leading-none tracking-tight text-gold-gradient filter drop-shadow-[0_12px_30px_rgba(0,0,0,0.95)] hover:scale-[1.02] transition-transform duration-500">
-            AMBROCIA'S
+          <h1 className="relative font-serif text-4xl sm:text-6xl lg:text-[5rem] xl:text-[7rem] font-black leading-none tracking-tight text-gold-gradient filter drop-shadow-[0_12px_30px_rgba(0,0,0,0.95)] hover:scale-[1.02] transition-transform duration-500">
+            AMBROCIA'S — Authentic Hyderabadi Biryani in Chennai
           </h1>
         </div>
 
         {/* Subtitle */}
         <p className="mt-6 text-sm sm:text-lg max-w-2xl text-gold-light/90 font-sans tracking-wide leading-relaxed">
-          An elite Indian luxury dining sanctuary in Chennai. Ancient Hyderabadi spice alchemy slow-cooked in charcoal wood-fired clay handis.
+          Order authentic Hyderabadi dum biryani, kebabs and tandoori — handcrafted in charcoal wood-fired clay handis. Delivery & dine-in across Chennai, quick bucket biryani for parties.
         </p>
 
         {/* CTAs */}

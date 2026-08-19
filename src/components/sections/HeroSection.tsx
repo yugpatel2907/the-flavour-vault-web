@@ -1,6 +1,13 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, Suspense } from 'react';
+import dynamic from 'next/dynamic';
+
+const Hero3D = dynamic(() => import('@/components/canvas/Hero3D'), { ssr: false, loading: () => null });
+
+function Hero3DPlaceholder() {
+  return <Hero3D />;
+}
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import * as THREE from 'three';
@@ -141,6 +148,14 @@ export default function HeroSection({ cameraRef, isLoaded }: HeroSectionProps) {
       ref={containerRef}
       className="relative w-full h-[180vh] pointer-events-none"
     >
+      {/* 3D Hero Canvas (lazy-loaded) */}
+      <Suspense>{/* lazy component rendered client-side only */}
+        <div className="hidden sm:block">
+          {/* imported dynamically to avoid SSR issues */}
+          <Hero3DPlaceholder />
+        </div>
+      </Suspense>
+
       {/* Sticky Hero Viewport */}
       <div className="sticky top-0 w-full h-screen flex flex-col justify-between p-6 sm:p-12 overflow-hidden">
         

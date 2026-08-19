@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { Bot, X, Sparkles, Flame, Check, Plus, ChefHat, HeartPulse, ShieldCheck, Search, Send, User, Award, Info } from 'lucide-react';
-import { ambrociaMenu, MenuItem } from '@/data/ambrociaMenu';
+import { MenuItem, ambrociaMenu } from '@/data/ambrociaMenu';
+import { useMenu } from '@/lib/useMenu';
 import { useCart } from '@/context/CartContext';
 import { audioSynthesizer } from '@/lib/audioSynthesizer';
 
@@ -35,6 +36,7 @@ export default function AIRecommender({ isOpen, onClose }: AIRecommenderProps) {
   );
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const { addToCart } = useCart();
+  const { menu: fetchedMenu } = useMenu();
 
   if (!isOpen) return null;
 
@@ -44,7 +46,7 @@ export default function AIRecommender({ isOpen, onClose }: AIRecommenderProps) {
     audioSynthesizer.playGong();
 
     setTimeout(() => {
-      let pool = [...ambrociaMenu];
+      let pool = [...fetchedMenu];
       let aiReasoning = "";
 
       const q = queryText.toLowerCase().trim();
@@ -122,6 +124,7 @@ export default function AIRecommender({ isOpen, onClose }: AIRecommenderProps) {
 
       // 5. Diet-Aware Fallback (NEVER return non-veg if user asked for veg!)
       if (pool.length === 0) {
+        // fallback to static data if fetched menu empty
         if (isExplicitVeg) {
           pool = ambrociaMenu.filter((i) => i.isVeg === true).slice(0, 4);
         } else if (isExplicitNonVeg) {
