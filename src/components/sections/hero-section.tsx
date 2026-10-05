@@ -54,7 +54,7 @@ export default function HeroSection({ onOpenAI, onOpenTracker }: HeroSectionProp
               onClick={onOpenAI}
               className="px-5 py-2.5 rounded-full text-xs tracking-[0.15em] font-serif uppercase bg-gradient-to-r from-saffron via-saffron-light to-gold text-[#0A0A0C] hover:scale-105 transition-all duration-300 active:scale-95 shadow-2xl shadow-saffron/30 font-bold flex items-center gap-2 border border-gold/50"
             >
-              <Bot className="w-4 h-4 text-[#0A0A0C]" /> AI DISH FINDER
+              <Bot className="w-4 h-4 text-[#0A0A0C]" /> FLAVOUR AI
             </button>
           </MagneticButton>
         </div>
@@ -106,7 +106,7 @@ export default function HeroSection({ onOpenAI, onOpenTracker }: HeroSectionProp
               onClick={onOpenAI}
               className="px-8 py-4 rounded-full bg-[#120F14]/90 text-gold-light font-serif text-xs tracking-[0.25em] uppercase hover:border-gold transition-all duration-300 flex items-center gap-2 border border-gold/40 shadow-xl"
             >
-              <Sparkles className="w-4 h-4 text-gold" /> AI DISH RECOMMENDATION
+              <Sparkles className="w-4 h-4 text-gold" /> ASK FLAVOUR AI
             </button>
           </MagneticButton>
         </div>

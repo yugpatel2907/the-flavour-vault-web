@@ -145,7 +145,7 @@ export default function CartDrawer() {
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className={`w-2 h-2 rounded-full ${item.menuItem.isVeg ? 'bg-gold' : 'bg-rose-500'}`} />
+                        <span title={item.menuItem.isVeg === null ? 'Dietary details unavailable' : item.menuItem.isVeg ? 'Vegetarian' : 'Non-vegetarian'} className={`w-2 h-2 rounded-full ${item.menuItem.isVeg === null ? 'bg-gold-muted' : item.menuItem.isVeg ? 'bg-gold' : 'bg-rose-500'}`} />
                         <h4 className="font-serif text-sm font-bold text-gold-light line-clamp-1">
                           {item.menuItem.name}
                         </h4>

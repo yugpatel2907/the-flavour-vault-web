@@ -1,7 +1,7 @@
-FROM node:18-alpine
+FROM node:22-alpine
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm ci --production
+RUN npm install --omit=dev --no-audit --no-fund
 COPY . .
 ENV PORT=4000
 EXPOSE 4000

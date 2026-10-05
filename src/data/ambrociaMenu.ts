@@ -3,7 +3,7 @@ export interface MenuItem {
   name: string;
   category: 'biryani' | 'bucket' | 'starters-nonveg' | 'starters-veg' | 'curries-nonveg' | 'curries-veg' | 'rotis' | 'kebabs-nonveg' | 'kebabs-veg' | 'tandoori' | 'chinese';
   price: number;
-  isVeg: boolean;
+  isVeg: boolean | null;
   spicyLevel?: 1 | 2 | 3;
   description?: string;
   spiceModelType?: 'star-anise' | 'clove' | 'cardamom' | 'chilli' | 'ember' | 'pot';

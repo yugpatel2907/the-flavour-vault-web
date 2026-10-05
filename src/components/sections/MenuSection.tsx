@@ -28,8 +28,8 @@ export default function MenuSection() {
     const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
     const filterMatch =
       filterType === 'all' ||
-      (filterType === 'veg' && item.isVeg) ||
-      (filterType === 'nonveg' && !item.isVeg);
+      (filterType === 'veg' && item.isVeg === true) ||
+      (filterType === 'nonveg' && item.isVeg === false);
     const searchMatch =
       searchQuery === '' ||
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -172,7 +172,7 @@ export default function MenuSection() {
                       <div className="flex items-center gap-2">
                         <span
                           className={`w-3 h-3 rounded-full flex-shrink-0 ${
-                            item.isVeg ? 'bg-emerald-400 ring-4 ring-emerald-400/20' : 'bg-rose-500 ring-4 ring-rose-500/20'
+                            item.isVeg === null ? 'bg-gold-muted' : item.isVeg ? 'bg-emerald-400 ring-4 ring-emerald-400/20' : 'bg-rose-500 ring-4 ring-rose-500/20'
                           }`}
                         />
                         <h3 className="font-serif text-lg font-bold text-gold-light group-hover:text-gold transition-colors">

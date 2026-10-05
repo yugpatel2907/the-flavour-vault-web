@@ -1,15 +1,11 @@
 "use client";
 
 import React from "react";
-import { ambrociaMenu, MenuItem } from "@/data/ambrociaMenu";
-
-function inferIsVeg(name: string) {
-  const nonVegPattern = /chicken|mutton|egg|fish|prawn|prawns|crab|shrimp|keema|meat|tandoori|kebab|murgh|boneless/i;
-  return !nonVegPattern.test(name);
-}
+import { ambrociaMenu, MenuItem, menuCategories } from "@/data/ambrociaMenu";
 
 function mapCategory(rawCat: string | undefined, name: string, isVeg: boolean) {
   const cat = (rawCat || "").toLowerCase();
+  if (menuCategories.some(category => category.id === cat && cat !== 'all')) return cat;
   const n = name.toLowerCase();
   if (n.includes("biryani")) return "biryani";
   if (n.includes("bucket")) return "bucket";
@@ -25,6 +21,7 @@ function mapCategory(rawCat: string | undefined, name: string, isVeg: boolean) {
 export function useMenu() {
   const [menu, setMenu] = React.useState<MenuItem[]>(ambrociaMenu);
   const [loading, setLoading] = React.useState(false);
+  const [authoritative, setAuthoritative] = React.useState(false);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -40,18 +37,20 @@ export function useMenu() {
           // normalize
           const normalized: MenuItem[] = data.map((it: any, idx: number) => {
             const name = String(it.name || it.title || `item-${idx}`);
-            const isVeg = typeof it.isVeg === 'boolean' ? it.isVeg : inferIsVeg(name);
-            const category = mapCategory(it.category, name, isVeg);
+            const isVeg = typeof it.isVeg === 'boolean' ? it.isVeg : null;
+            const category = mapCategory(it.category, name, isVeg === true);
             return {
               id: String(it.id ?? it._id ?? idx),
               name,
               category: category as MenuItem['category'],
               price: Number(it.price || 0),
               isVeg,
+              ...([1, 2, 3].includes(it.spicyLevel) ? { spicyLevel: it.spicyLevel } : {}),
               description: it.description || "",
             } as MenuItem;
           });
           setMenu(normalized);
+          setAuthoritative(true);
           setLoading(false);
           return;
         } catch (e) {
@@ -66,5 +65,5 @@ export function useMenu() {
     };
   }, []);
 
-  return { menu, loading };
+  return { menu, loading, authoritative };
 }
