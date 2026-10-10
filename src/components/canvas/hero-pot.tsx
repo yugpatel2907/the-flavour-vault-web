@@ -3,6 +3,7 @@
 import React, { useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { particleRandom } from '@/lib/particleRandom';
 import { steamVertexShader, steamFragmentShader } from '@/shaders/steamParticles';
 
 export default function HeroPot() {
@@ -23,16 +24,16 @@ export default function HeroPot() {
 
     for (let i = 0; i < particleCount; i++) {
       // Circle emission around rim of pot
-      const angle = Math.random() * Math.PI * 2;
-      const radius = Math.random() * 0.45;
+      const angle = particleRandom(i, 16) * Math.PI * 2;
+      const radius = particleRandom(i, 17) * 0.45;
       pos[i * 3] = Math.cos(angle) * radius;
       pos[i * 3 + 1] = 0.8; // Rim height
       pos[i * 3 + 2] = Math.sin(angle) * radius;
 
-      sc[i] = Math.random() * 0.6 + 0.4;
-      vel[i * 3] = Math.random();
-      vel[i * 3 + 1] = Math.random();
-      vel[i * 3 + 2] = Math.random();
+      sc[i] = particleRandom(i, 18) * 0.6 + 0.4;
+      vel[i * 3] = particleRandom(i, 19);
+      vel[i * 3 + 1] = particleRandom(i, 20);
+      vel[i * 3 + 2] = particleRandom(i, 21);
     }
 
     return [pos, sc, vel];

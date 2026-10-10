@@ -59,7 +59,7 @@ export default function PunjabiSabjiCarouselSection() {
           </h2>
 
           <p className="mt-4 text-gold-light/80 text-sm sm:text-base font-sans leading-relaxed">
-            Explore our highest-rated & most ordered Punjabi Sabjis, Biryanis, and Chef's Royal Specialities.
+            Explore our highest-rated & most ordered Punjabi Sabjis, Biryanis, and Chef&apos;s Royal Specialities.
           </p>
         </div>
 

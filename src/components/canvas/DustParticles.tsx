@@ -3,6 +3,7 @@
 import React, { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { particleRandom } from '@/lib/particleRandom';
 import {
   sandParticleVertexShader,
   sandParticleFragmentShader,
@@ -22,15 +23,15 @@ export default function DustParticles({ count = 1200 }: DustParticlesProps) {
 
     for (let i = 0; i < count; i++) {
       // Swirling distribution volume
-      pos[i * 3] = (Math.random() - 0.5) * 40;
-      pos[i * 3 + 1] = (Math.random() - 0.3) * 22;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 40;
+      pos[i * 3] = (particleRandom(i, 0) - 0.5) * 40;
+      pos[i * 3 + 1] = (particleRandom(i, 1) - 0.3) * 22;
+      pos[i * 3 + 2] = (particleRandom(i, 2) - 0.5) * 40;
 
-      sc[i] = Math.random() * 0.85 + 0.3;
+      sc[i] = particleRandom(i, 3) * 0.85 + 0.3;
 
-      rand[i * 3] = Math.random();
-      rand[i * 3 + 1] = Math.random();
-      rand[i * 3 + 2] = Math.random();
+      rand[i * 3] = particleRandom(i, 4);
+      rand[i * 3 + 1] = particleRandom(i, 5);
+      rand[i * 3 + 2] = particleRandom(i, 6);
     }
 
     return [pos, sc, rand];

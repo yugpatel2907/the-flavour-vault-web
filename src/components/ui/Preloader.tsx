@@ -97,7 +97,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
         {/* Brand Title */}
         <h1 className="font-serif text-3xl font-extrabold text-gold-gradient tracking-[0.25em] uppercase mb-2">
-          AMBROCIA'S
+          AMBROCIA&apos;S
         </h1>
 
         <p className="text-[10px] font-serif tracking-[0.35em] text-gold-muted uppercase mb-6 flex items-center gap-1.5">

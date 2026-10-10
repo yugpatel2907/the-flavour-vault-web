@@ -52,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${cinzel.variable} scroll-smooth`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${cinzel.variable} scroll-smooth`}>
       <body className="bg-[#0A0A0C] text-gold-light antialiased selection:bg-saffron selection:text-[#0A0A0C]">
         <script
           type="application/ld+json"

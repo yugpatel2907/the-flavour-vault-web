@@ -45,7 +45,9 @@ export default function CartDrawer() {
       total: totalAmount,
     };
 
-    const endpoints = ['/api/orders', 'http://localhost:4000/api/orders'];
+    // Same-origin proxy targets the configured Express backend in every environment.
+    // Do not retry an order against another origin after an uncertain response.
+    const endpoints = ['/api/orders'];
     let success = false;
     let respJson: any = null;
 

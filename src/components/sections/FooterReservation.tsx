@@ -70,7 +70,7 @@ export default function FooterReservation() {
                   RESERVATION REQUESTED!
                 </h3>
                 <p className="text-xs text-gold-light/80 max-w-xs mx-auto">
-                  Our Maitre d' will call you shortly on {formData.phone} to confirm your table.
+                  Our Maitre d&apos; will call you shortly on {formData.phone} to confirm your table.
                 </p>
               </div>
             ) : (
@@ -159,7 +159,7 @@ export default function FooterReservation() {
       {/* Footer Bottom */}
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-serif text-gold-muted">
         <div>
-          © 2026 AMBROCIA'S RESTAURANT. ALL RIGHTS RESERVED.
+          © 2026 AMBROCIA&apos;S RESTAURANT. ALL RIGHTS RESERVED.
         </div>
         <div className="flex items-center gap-2">
           <span>AUTHENTIC HYDERABADI GASTRONOMY</span>

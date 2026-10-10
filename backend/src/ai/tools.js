@@ -41,18 +41,24 @@ function createToolDefinitions(snapshot, source = menu) {
     if (actionPrepared) return { error: { code: 'WAIT_FOR_CART', message: 'Wait for browser execution and inspect the fresh cart before another action.' } };
     // Reserve synchronously before I/O: SDK tools may execute concurrently.
     actionPrepared = true;
-    const item = await source.getMenuItem(input.itemId);
-    if (!item || !Number.isFinite(item.price) || item.price < 0) return { error: { code: 'ITEM_UNAVAILABLE', message: 'That item is not on the available menu.' } };
-    const current = snapshot.find(line => line.itemId === item.id)?.quantity || 0;
-    if (kind !== 'add' && !current) return { error: { code: 'NOT_IN_CART', message: 'That item is not in the current cart.' } };
-    if (kind === 'add' && current + input.quantity > 50) return { error: { code: 'INVALID_QUANTITY', message: 'Maximum quantity is 50 per item.' } };
-    if (input.maxTotal !== undefined) {
-      const cart = await summarizeCart(snapshot, source);
-      if (cart.unavailable.length) return { error: { code: 'ITEM_UNAVAILABLE', message: 'Review unavailable cart items before changing a budgeted meal.' } };
-      const total = Math.round((cart.total + item.price * (kind === 'add' ? input.quantity : input.quantity - current)) * 100) / 100;
-      if (total > input.maxTotal) return { error: { code: 'BUDGET_EXCEEDED', message: `This would make the cart ₹${total}, above your ₹${input.maxTotal} budget.` } };
+    let approved = false;
+    try {
+      const item = await source.getMenuItem(input.itemId);
+      if (!item || !Number.isFinite(item.price) || item.price < 0) return { error: { code: 'ITEM_UNAVAILABLE', message: 'That item is not on the available menu.' } };
+      const current = snapshot.find(line => line.itemId === item.id)?.quantity || 0;
+      if (kind !== 'add' && !current) return { error: { code: 'NOT_IN_CART', message: 'That item is not in the current cart.' } };
+      if (kind === 'add' && current + input.quantity > 50) return { error: { code: 'INVALID_QUANTITY', message: 'Maximum quantity is 50 per item.' } };
+      if (input.maxTotal !== undefined) {
+        const cart = await summarizeCart(snapshot, source);
+        if (cart.unavailable.length) return { error: { code: 'ITEM_UNAVAILABLE', message: 'Review unavailable cart items before changing a budgeted meal.' } };
+        const total = Math.round((cart.total + item.price * (kind === 'add' ? input.quantity : input.quantity - current)) * 100) / 100;
+        if (total > input.maxTotal) return { error: { code: 'BUDGET_EXCEEDED', message: `This would make the cart ₹${total}, above your ₹${input.maxTotal} budget.` } };
+      }
+      approved = true;
+      return { action: { id: randomUUID(), kind, item, quantity: input.quantity, expectedQuantity: current }, status: 'pending', message: 'Await browser execution. Do not claim this action succeeded yet.' };
+    } finally {
+      if (!approved) actionPrepared = false;
     }
-    return { action: { id: randomUUID(), kind, item, quantity: input.quantity, expectedQuantity: current }, status: 'pending', message: 'Await browser execution. Do not claim this action succeeded yet.' };
   };
   return {
     search_menu: {

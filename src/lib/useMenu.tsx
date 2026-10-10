@@ -27,7 +27,7 @@ export function useMenu() {
     let cancelled = false;
     async function fetchMenu() {
       setLoading(true);
-      const urls = ["/api/menu", "http://localhost:4000/api/menu"];
+      const urls = ["/api/menu"];
       for (const u of urls) {
         try {
           const res = await fetch(u, { cache: "no-store" });

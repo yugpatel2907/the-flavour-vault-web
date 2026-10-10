@@ -57,7 +57,7 @@ export default function BucketBiryaniShowcase() {
               </span>
             </div>
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-gold-gradient tracking-tight">
-              AMBROCIA'S BUCKET BIRYANI
+              AMBROCIA&apos;S BUCKET BIRYANI
             </h2>
             <p className="mt-4 text-gold-light/80 text-sm sm:text-base leading-relaxed">
               Designed for royal gatherings and family celebrations. 5 generous portions of slow-cooked dum biryani with marinated tender meat, boiled eggs, mirchi ka salan, and raita.

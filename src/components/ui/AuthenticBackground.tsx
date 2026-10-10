@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { particleRandom } from "@/lib/particleRandom";
 
 export default function AuthenticBackground() {
   return (
@@ -46,11 +47,11 @@ export default function AuthenticBackground() {
       {/* 2. Floating Gold Dust & Candlelit Ember Particles */}
       <div className="absolute inset-0 pointer-events-none">
         {Array.from({ length: 24 }).map((_, i) => {
-          const size = Math.random() * 4 + 2;
-          const left = Math.random() * 100;
-          const top = Math.random() * 100;
-          const duration = Math.random() * 10 + 12;
-          const delay = Math.random() * 5;
+          const size = particleRandom(i, 48) * 4 + 2;
+          const left = particleRandom(i, 49) * 100;
+          const top = particleRandom(i, 50) * 100;
+          const duration = particleRandom(i, 51) * 10 + 12;
+          const delay = particleRandom(i, 52) * 5;
 
           return (
             <motion.div
@@ -66,7 +67,7 @@ export default function AuthenticBackground() {
               }}
               animate={{
                 y: [0, -70, 0],
-                x: [0, (Math.random() - 0.5) * 30, 0],
+                x: [0, (particleRandom(i, 53) - 0.5) * 30, 0],
                 opacity: [0.2, 0.85, 0.2],
                 scale: [0.7, 1.3, 0.7],
               }}

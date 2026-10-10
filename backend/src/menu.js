@@ -5,7 +5,7 @@ function normalize(row) {
   const spice = row.spicyLevel ?? row.spicylevel;
   return {
     id: String(row.id), name: row.name, category: row.category,
-    price: Number(row.price), isVeg: row.isVeg ?? row.isveg ?? null,
+    price: row.price == null || row.price === '' ? null : Number(row.price), isVeg: row.isVeg ?? row.isveg ?? null,
     description: row.description || '',
     ...(spice != null && [1, 2, 3].includes(Number(spice)) ? { spicyLevel: Number(spice) } : {}),
   };
@@ -31,9 +31,10 @@ async function searchMenu(filters = {}) {
     if (filters.minSpicyLevel !== undefined) add("(to_jsonb(menu)->>'spicylevel')::integer >= ?", filters.minSpicyLevel);
     if (filters.maxSpicyLevel !== undefined) add("(to_jsonb(menu)->>'spicylevel')::integer <= ?", filters.maxSpicyLevel);
     const result = await db.query(`SELECT ${fields} FROM menu ${clauses.length ? `WHERE ${clauses.join(' AND ')}` : ''} ORDER BY id`, params);
-    return result.rows.map(normalize);
+    return result.rows.map(normalize).filter(item => Number.isFinite(item.price) && item.price >= 0);
   }
   return memoryMenu.map(normalize).filter(item =>
+    Number.isFinite(item.price) && item.price >= 0 &&
     (filters.itemId === undefined || item.id === filters.itemId) &&
     (!filters.query || `${item.name} ${item.category} ${item.description}`.toLowerCase().includes(filters.query.toLowerCase())) &&
     (filters.isVeg === undefined || item.isVeg === filters.isVeg) &&

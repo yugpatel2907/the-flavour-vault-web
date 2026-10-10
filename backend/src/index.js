@@ -6,6 +6,7 @@ const dbLib = require('./db');
 const { createChatHandler } = require('./ai/agent');
 const { cart: validateCart, ValidationError } = require('./ai/validation');
 const { summarizeCart } = require('./ai/tools');
+const { requireMenuSyncAuth } = require('./adminAuth');
 
 const app = express();
 app.use(cors());
@@ -24,7 +25,7 @@ app.get('/api/menu', async (req, res) => {
 });
 
 // Admin: sync menu data (accepts array of menu items) and writes to DB or in-memory
-app.post('/api/admin/menu-sync', async (req, res) => {
+app.post('/api/admin/menu-sync', requireMenuSyncAuth, async (req, res) => {
   const { menu: incomingMenu } = req.body;
   if (!Array.isArray(incomingMenu) || incomingMenu.some(item => !item || typeof item !== 'object')) return res.status(400).json({ error: 'menu must be an array of menu items' });
 

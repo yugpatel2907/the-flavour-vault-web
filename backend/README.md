@@ -2,6 +2,9 @@
 
 This simple Node/Express backend serves menu and restaurant info and accepts orders.
 
+For complete Flavour AI env templates and deployment steps, see
+[FLAVOUR_AI_SETUP.md](../FLAVOUR_AI_SETUP.md). Initial development needs no database.
+
 Quick start (local, no DB):
 
 1. cd backend
@@ -15,13 +18,24 @@ Endpoints:
 
 Using Postgres (recommended on Railway):
 1. Create a Railway project and add a Postgres plugin.
-2. Copy the generated `DATABASE_URL` value into Railway environment variables (and into your local `.env` for local testing).
-3. Run `npm run seed` to populate the `menu` table.
+2. Configure the backend's private `DATABASE_URL`; local testing outside Railway needs its public connection URL, not an internal hostname. Use a separate test database.
+3. Populate only a disposable/approved database. The seed replaces the menu; do not run it against an unknown or production database. From `backend/`, `npm run seed` loads your private local `.env` configuration.
 4. Start: `npm start` — the server will use the Postgres DB when `DATABASE_URL` is present.
 
 Environment variables:
 - `DATABASE_URL` — Postgres connection string (Railway provides this)
 - `PORT` — port to listen on (default 4000)
+- `NODE_ENV` — `development` locally, `production` on deployed Preview and Production backends (already set by Docker)
+- `DATABASE_SSL_MODE` — defaults to `verify-full`, verifying the certificate chain and hostname. `disable` is accepted only with `NODE_ENV=development` or `test`, for a local database without TLS.
+- `DATABASE_SSL_CA_FILE` — optional mounted provider CA PEM path when the database uses a private CA. Leave unset for system CA trust; this setting also works in local backend/.env.
+- `ADMIN_MENU_SYNC_TOKEN` — private, high-entropy admin bearer token. Missing configuration disables menu sync.
+
+Connection-string `ssl*` and `uselibpqcompat` parameters are removed before pg
+parses the URL, so they cannot override the TLS policy. `PGSSLMODE` also cannot
+override it. Configure TLS using the variables above. Deployed PostgreSQL must
+support TLS and provide a certificate valid for its connection hostname. For a
+private CA, mount the provider's trusted CA file and set `DATABASE_SSL_CA_FILE`
+before starting the backend; never solve certificate errors by disabling verification.
 
 Notes:
 - The server falls back to in-memory data if no `DATABASE_URL` is provided — useful for local dev when you don't want to provision a DB.
@@ -32,11 +46,19 @@ Admin: Sync menu data
 You can push the full product/menu data (JSON array) to the backend so it becomes the canonical source of truth.
 
 POST /api/admin/menu-sync
+- header: `Authorization: Bearer <ADMIN_MENU_SYNC_TOKEN>` (from a trusted admin client over HTTPS, never browser code)
 - body: `{ "menu": [ { name, category, price, isVeg, description }, ... ] }`
 - When `DATABASE_URL` is present the endpoint will write the items into Postgres `menu` table (it will create/truncate the table).
 - When no DB is configured the server will update an in-memory menu used by `GET /api/menu`.
 
 This is useful to sync frontend `ambrociaMenu` into the backend database or to integrate a headless CMS: export menu JSON from the CMS and POST it to this endpoint.
+
+Generate the token privately with at least 32 random bytes and configure it only
+on the Express host (or local `backend/.env`). Missing/malformed/wrong authorization
+returns 401 before any menu writes; an authorized-shaped request with missing
+server configuration returns 503. Token hashes are compared in constant time.
+Existing payload validation and sync behavior are preserved. Use a disposable
+test database for verification; sync replaces the menu.
 
 ## Flavour AI
 
@@ -95,3 +117,11 @@ cart guard, budget, PostgreSQL query-contract, and existing order-route tests.
 These deterministic tests do not require Groq credentials or a PostgreSQL server.
 See `../FLAVOUR_AI_IMPLEMENTATION.md` for verification status and the remaining
 live acceptance scenarios.
+
+## Final verification
+
+Dependency locks now include the compatible AI SDK/Groq packages; Docker uses
+`npm ci --omit=dev` and excludes env files and node_modules from its build context.
+See `../FLAVOUR_AI_VERIFICATION.md` for the current checks, local
+configuration, Preview/Production setup, and remaining blockers. The earlier
+implementation report records historical limitations, not the latest status.

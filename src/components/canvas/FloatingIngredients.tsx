@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import gsap from 'gsap';
+import { particleRandom } from '@/lib/particleRandom';
 
 interface FloatingIngredientsProps {
   activeSpice: 'star-anise' | 'clove' | 'cardamom' | 'chilli' | 'ember' | 'pot' | null;
@@ -146,12 +147,12 @@ export default function FloatingIngredients({ activeSpice }: FloatingIngredients
             <mesh
               key={i}
               position={[
-                (Math.random() - 0.5) * 1.8,
-                (Math.random() - 0.5) * 1.8,
-                (Math.random() - 0.5) * 1.8,
+                (particleRandom(i, 32) - 0.5) * 1.8,
+                (particleRandom(i, 33) - 0.5) * 1.8,
+                (particleRandom(i, 34) - 0.5) * 1.8,
               ]}
             >
-              <sphereGeometry args={[0.06 + Math.random() * 0.08, 12, 12]} />
+              <sphereGeometry args={[0.06 + particleRandom(i, 35) * 0.08, 12, 12]} />
               <meshBasicMaterial color={i % 2 === 0 ? '#FF5500' : '#FFAA00'} />
             </mesh>
           ))}

@@ -47,7 +47,7 @@ export default function MenuSection() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#120F14]/90 border border-gold/30 mb-4 shadow-lg">
             <Flame className="w-3.5 h-3.5 text-saffron animate-pulse" />
             <span className="text-[11px] tracking-[0.35em] text-gold-muted uppercase font-serif font-bold">
-              AMBROCIA'S OFFICIAL HYDERABADI MENU
+              AMBROCIA&apos;S OFFICIAL HYDERABADI MENU
             </span>
           </div>
 

@@ -2,6 +2,9 @@
 
 This repository contains a Next.js frontend and a small Node/Express backend for Ambrocia's Restaurant demo (digital marketing course project).
 
+For the Flavour AI branch, use [FLAVOUR_AI_SETUP.md](./FLAVOUR_AI_SETUP.md) for
+complete local env templates, private-key sources, and Preview/Production setup.
+
 Quick start (frontend)
 
 1. Install dependencies and run the Next dev server:
