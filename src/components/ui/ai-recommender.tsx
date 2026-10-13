@@ -155,7 +155,7 @@ export default function AIRecommender({ isOpen, onClose }: AIRecommenderProps) {
         <button disabled={busy} onClick={() => { history.current = []; setMessages([]); setError(''); setInput(''); inputRef.current?.focus(); }} className="text-xs text-gold-muted hover:text-gold disabled:opacity-40">New chat</button>
         <button aria-label="Close Flavour AI" onClick={close} className="p-2 rounded-full border border-gold/30 hover:bg-gold/10"><X size={18} /></button>
       </header>
-      <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6 space-y-5" role="log" aria-label="Flavour AI conversation" aria-live="polite" aria-relevant="additions text">
+      <div className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6 space-y-5" role="log" aria-label="Flavour AI conversation" aria-live="polite" aria-relevant="additions text">
         {messages.length === 0 && <div className="py-6 sm:py-12 text-center">
           <Sparkles className="mx-auto text-saffron mb-4" size={28} />
           <h3 className="font-serif text-2xl text-gold-gradient">What are you craving?</h3>
@@ -193,7 +193,7 @@ export default function AIRecommender({ isOpen, onClose }: AIRecommenderProps) {
           <input ref={inputRef} value={input} onChange={event => setInput(event.target.value)} disabled={busy} maxLength={2000} aria-label="Ask Flavour AI" placeholder="Tell me what you’re craving…" className="flex-1 min-w-0 rounded-xl border border-gold/30 bg-[#0A0A0C] px-4 py-3 text-base sm:text-sm outline-none focus:border-gold disabled:opacity-50" />
           {busy ? <button type="button" aria-label="Stop response" onClick={() => controller.current?.abort()} className="p-3 rounded-xl border border-gold/30 text-gold"><Square size={18} /></button> : <button type="submit" disabled={!input.trim()} aria-label="Send message" className="rounded-xl p-3 bg-gradient-to-r from-saffron to-gold text-[#0A0A0C] disabled:opacity-40"><Send size={18} /></button>}
         </form>
-        <p className="text-[10px] text-gold-muted/80">Please confirm allergies with the restaurant. Orders require your confirmation at checkout.</p>
+        <p className="text-[10px] text-gold-muted/80">Please confirm allergies with the restaurant. Checkout is a demo; no orders are sent or saved.</p>
       </footer>
     </div>
   </div>;

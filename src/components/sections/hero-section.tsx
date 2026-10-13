@@ -6,8 +6,6 @@ import SpotlightNavbar from '@/components/ui/spotlight-navbar';
 import { ArrowDown, Flame, Sparkles, Compass, Star, Bot, Clock } from 'lucide-react';
 
 interface HeroSectionProps {
-  cameraRef?: React.MutableRefObject<any>;
-  isLoaded?: boolean;
   onOpenAI: () => void;
   onOpenTracker: () => void;
 }
@@ -46,7 +44,7 @@ export default function HeroSection({ onOpenAI, onOpenTracker }: HeroSectionProp
             onClick={onOpenTracker}
             className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#120F14]/80 text-[11px] font-serif uppercase tracking-wider text-gold-muted hover:text-gold transition-colors border border-gold/30 shadow-lg"
           >
-            <Clock className="w-3.5 h-3.5 text-saffron" /> TRACK ORDER
+            <Clock className="w-3.5 h-3.5 text-saffron" /> TRACKING DEMO
           </button>
 
           <MagneticButton>
