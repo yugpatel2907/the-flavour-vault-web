@@ -6,8 +6,6 @@ import SpotlightNavbar from '@/components/ui/spotlight-navbar';
 import { ArrowDown, Flame, Sparkles, Compass, Star, Bot, Clock } from 'lucide-react';
 
 interface HeroSectionProps {
-  cameraRef?: React.MutableRefObject<any>;
-  isLoaded?: boolean;
   onOpenAI: () => void;
   onOpenTracker: () => void;
 }
@@ -24,7 +22,7 @@ export default function HeroSection({ onOpenAI, onOpenTracker }: HeroSectionProp
             <Compass className="w-5 h-5 text-gold animate-spin-slow" />
           </div>
           <div className="font-serif text-xl tracking-[0.25em] text-gold-gradient font-black uppercase">
-            AMBROCIA'S
+            AMBROCIA&apos;S
           </div>
         </div>
 
@@ -46,7 +44,7 @@ export default function HeroSection({ onOpenAI, onOpenTracker }: HeroSectionProp
             onClick={onOpenTracker}
             className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#120F14]/80 text-[11px] font-serif uppercase tracking-wider text-gold-muted hover:text-gold transition-colors border border-gold/30 shadow-lg"
           >
-            <Clock className="w-3.5 h-3.5 text-saffron" /> TRACK ORDER
+            <Clock className="w-3.5 h-3.5 text-saffron" /> TRACKING DEMO
           </button>
 
           <MagneticButton>
@@ -54,7 +52,7 @@ export default function HeroSection({ onOpenAI, onOpenTracker }: HeroSectionProp
               onClick={onOpenAI}
               className="px-5 py-2.5 rounded-full text-xs tracking-[0.15em] font-serif uppercase bg-gradient-to-r from-saffron via-saffron-light to-gold text-[#0A0A0C] hover:scale-105 transition-all duration-300 active:scale-95 shadow-2xl shadow-saffron/30 font-bold flex items-center gap-2 border border-gold/50"
             >
-              <Bot className="w-4 h-4 text-[#0A0A0C]" /> AI DISH FINDER
+              <Bot className="w-4 h-4 text-[#0A0A0C]" /> FLAVOUR AI
             </button>
           </MagneticButton>
         </div>
@@ -81,7 +79,7 @@ export default function HeroSection({ onOpenAI, onOpenTracker }: HeroSectionProp
           <div className="absolute inset-0 bg-radial-gradient from-saffron/20 via-gold/10 to-transparent blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
           
           <h1 className="relative font-serif text-4xl sm:text-6xl lg:text-[5rem] xl:text-[7rem] font-black leading-none tracking-tight text-gold-gradient filter drop-shadow-[0_12px_30px_rgba(0,0,0,0.95)] hover:scale-[1.02] transition-transform duration-500">
-            AMBROCIA'S — Authentic Hyderabadi Biryani in Chennai
+            AMBROCIA&apos;S — Authentic Hyderabadi Biryani in Chennai
           </h1>
         </div>
 
@@ -106,7 +104,7 @@ export default function HeroSection({ onOpenAI, onOpenTracker }: HeroSectionProp
               onClick={onOpenAI}
               className="px-8 py-4 rounded-full bg-[#120F14]/90 text-gold-light font-serif text-xs tracking-[0.25em] uppercase hover:border-gold transition-all duration-300 flex items-center gap-2 border border-gold/40 shadow-xl"
             >
-              <Sparkles className="w-4 h-4 text-gold" /> AI DISH RECOMMENDATION
+              <Sparkles className="w-4 h-4 text-gold" /> ASK FLAVOUR AI
             </button>
           </MagneticButton>
         </div>

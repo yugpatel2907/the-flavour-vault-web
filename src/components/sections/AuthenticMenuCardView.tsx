@@ -14,7 +14,7 @@ export default function AuthenticMenuCardView() {
           </span>
         </div>
         <h2 className="font-serif text-3xl sm:text-5xl font-black text-gold-gradient tracking-tight uppercase">
-          AMBROCIA'S RESTAURANT MENU
+          AMBROCIA&apos;S RESTAURANT MENU
         </h2>
       </div>
 
@@ -36,7 +36,7 @@ export default function AuthenticMenuCardView() {
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-serif text-gold-muted">
         <div className="p-4 rounded-xl bg-[#0A0A0C]/80 border border-gold/30 flex flex-col gap-1.5">
           <div className="font-bold text-gold text-sm uppercase flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-saffron" /> Ambrocia's Restaurant (Main Branch)
+            <MapPin className="w-4 h-4 text-saffron" /> Ambrocia&apos;s Restaurant (Main Branch)
           </div>
           <div>Near VIT College, Opp To. Life Cell Company, Kelakottiyur, Chennai - 600 102</div>
           <div className="flex items-center gap-3 text-gold-light mt-1">

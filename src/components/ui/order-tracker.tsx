@@ -40,9 +40,9 @@ export default function OrderTracker({ isOpen, onClose }: OrderTrackerProps) {
             </div>
             <div>
               <h2 className="font-serif text-xl font-bold text-gold-gradient tracking-wider uppercase">
-                LIVE KITCHEN TELEMETRY
+                ORDER TRACKING DEMO
               </h2>
-              <p className="text-[11px] text-gold-muted/80">Real-time Hyderabadi Dum biryani status</p>
+              <p className="text-[11px] text-gold-muted/80">Sample animation. Call the restaurant for actual order updates.</p>
             </div>
           </div>
 
@@ -90,7 +90,7 @@ export default function OrderTracker({ isOpen, onClose }: OrderTrackerProps) {
 
         {/* Footer */}
         <div className="pt-6 border-t border-gold/20 flex justify-between items-center text-xs font-serif text-gold-muted">
-          <span>ESTIMATED DUM TIME: 25 MINS</span>
+          <span>ILLUSTRATIVE TIMELINE ONLY</span>
           <span className="text-gold font-bold uppercase tracking-wider">CHENNAI KITCHEN #01</span>
         </div>
       </div>

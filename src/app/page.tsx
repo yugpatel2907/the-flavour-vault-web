@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import SceneCanvas from '@/components/canvas/SceneCanvas';
 import AuthenticBackground from '@/components/ui/AuthenticBackground';
 import Preloader from '@/components/ui/Preloader';
 import HeroSection from '@/components/sections/hero-section';
@@ -33,22 +32,14 @@ function FloatingCartButton() {
 }
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [isAIOpen, setIsAIOpen] = useState(false);
   const [isTrackerOpen, setIsTrackerOpen] = useState(false);
-
-  const handlePreloaderComplete = () => {
-    setIsLoaded(true);
-  };
 
   return (
     <CartProvider>
       <main id="home" className="relative w-full min-h-screen bg-[#0A0A0C] text-gold-light selection:bg-saffron selection:text-[#0A0A0C] overflow-x-hidden">
         {/* Preloader */}
-        <Preloader onComplete={handlePreloaderComplete} />
-
-        {/* Master 3D Three.js WebGL Scene Canvas */}
-        <SceneCanvas />
+        <Preloader />
 
         {/* Authentic 5-Star Royal Background */}
         <AuthenticBackground />
@@ -77,7 +68,7 @@ export default function Home() {
         {/* AI Culinary Recommender Modal */}
         <AIRecommender isOpen={isAIOpen} onClose={() => setIsAIOpen(false)} />
 
-        {/* Live Kitchen Order Tracker Telemetry Modal */}
+        {/* Order Tracking Demo Modal */}
         <OrderTracker isOpen={isTrackerOpen} onClose={() => setIsTrackerOpen(false)} />
 
         {/* Ambient Sound FX Toggle */}

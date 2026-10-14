@@ -51,28 +51,11 @@ html, body {
   border: 1px solid rgba(212, 175, 55, 0.15);
 }
 
-.glass-gold {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, rgba(224, 90, 71, 0.1) 100%);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-}
-
 /* Text Gradients */
 .text-gold-gradient {
   background: linear-gradient(135deg, #FFF6D6 0%, #D4AF37 50%, #C5A030 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.text-saffron-gradient {
-  background: linear-gradient(135deg, #F3E5AB 0%, #E05A47 50%, #8B4513 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Perspective */
-.perspective-1000 {
-  perspective: 1000px;
 }
 
 .transform-gpu {

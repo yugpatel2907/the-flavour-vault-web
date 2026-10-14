@@ -4,11 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { Compass, Flame } from 'lucide-react';
 
-interface PreloaderProps {
-  onComplete: () => void;
-}
-
-export default function Preloader({ onComplete }: PreloaderProps) {
+export default function Preloader() {
   const containerRef = useRef<HTMLDivElement>(null);
   const curtainLeftRef = useRef<HTMLDivElement>(null);
   const curtainRightRef = useRef<HTMLDivElement>(null);
@@ -39,7 +35,6 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           if (containerRef.current) {
             containerRef.current.style.display = 'none';
           }
-          onComplete();
         },
       });
 
@@ -63,7 +58,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [progress, onComplete]);
+  }, [progress]);
 
   return (
     <div
@@ -97,7 +92,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
         {/* Brand Title */}
         <h1 className="font-serif text-3xl font-extrabold text-gold-gradient tracking-[0.25em] uppercase mb-2">
-          AMBROCIA'S
+          AMBROCIA&apos;S
         </h1>
 
         <p className="text-[10px] font-serif tracking-[0.35em] text-gold-muted uppercase mb-6 flex items-center gap-1.5">

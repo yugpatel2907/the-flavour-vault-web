@@ -1,6 +1,6 @@
-import { CylinderItem } from "@/components/ui/cylinder-carousel";
+import type { CylinderItem } from "@/components/ui/cylinder-carousel";
 
-export const punjabiSabjiDishes: CylinderItem[] = [
+export const punjabiSabjiDishes: (CylinderItem & { spicyLevel: 1 | 2 | 3; isVeg: boolean })[] = [
   {
     id: "ps1",
     name: "Paneer Butter Masala",

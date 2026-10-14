@@ -1,51 +1,54 @@
-# The Flavour Vault — Ambrocia's (Monorepo)
+# The Flavour Vault — Ambrocia's
 
-This repository contains a Next.js frontend and a small Node/Express backend for Ambrocia's Restaurant demo (digital marketing course project).
+The restaurant demo and Flavour AI run in **one Next.js application**. Deploy the
+repository root to Vercel. No separately hosted backend or database is required.
+The Groq key stays in the Next.js server route, never in browser code.
 
-Quick start (frontend)
+## Local development
 
-1. Install dependencies and run the Next dev server:
+Use Node.js 22.18+ (Node 22.x or 24.x LTS recommended).
 
 ```bash
-cd /home/yugpatel/the-flavour-vault-web
-npm install
+npm ci
 npm run dev
 ```
 
-The frontend runs on `http://localhost:3000` by default.
+Open http://localhost:3000. Menu, carousels, cart, reservation demo and checkout
+demo work without environment variables. To enable live AI, create root
+`.env.local` privately using [.env.example](./.env.example), and fill your Groq
+key. See [FLAVOUR_AI_SETUP.md](./FLAVOUR_AI_SETUP.md) for exact instructions.
+Do not overwrite an existing private env file or commit it.
 
-Backend (local)
-
-1. Start the backend API (port 4000):
+## Checks
 
 ```bash
-cd backend
-npm install
-# optional: set DATABASE_URL for Postgres and seed
-# export DATABASE_URL="postgres://..."
-# npm run seed
+npm run lint
+npm run typecheck
+npm test
+npm run build
 npm start
 ```
 
-API
-- `GET /api/menu` — fetch menu items
-- `POST /api/orders` — submit an order
-- `POST /api/admin/menu-sync` — admin endpoint to sync menu JSON into the backend
+`npm start` serves the production build locally. `./run-local.sh` starts the single
+development server in the foreground; Ctrl+C stops it.
 
-Deploying
+## Runtime and deployment
 
-Frontend (Vercel)
-- Create a Vercel project pointing to this repository; Vercel will detect Next.js and deploy automatically.
-- Set any environment variables under Vercel Project Settings if needed.
+- `src/data/menu.ts` combines the existing menu and Punjabi carousel records.
+  The menu UI, `/api/menu`, Flavour AI cards and cart use these same real records.
+- `/api/ai/chat` is a streaming Next.js Node route using AI SDK and Groq. Its
+  seven validated tools prepare cart actions for the existing CartContext.
+- Checkout, reservations and tracking are **clearly labelled demos**. No orders,
+  payments or reservations are sent or stored. Call the listed restaurant number
+  to make a real booking/order. AI only prepares a summary and opens cart review.
+- Vercel: Next.js preset, root directory `.`, `npm ci`, `npm run build`, Node 22.x.
+  Configure private `GROQ_API_KEY` and non-public `AI_MODEL` separately in Preview
+  and Production. Redeploy after changes. No `BACKEND_URL`, database, admin token,
+  separate Express deployment or CORS configuration is needed.
 
-Backend (Railway)
-- Create a Railway project and add a Postgres plugin.
-- Set the `DATABASE_URL` Railway provides as an environment variable.
-- Deploy by connecting the repo (or push a branch) or deploy using a Dockerfile.
+The obsolete Express backend, tracked dependency files, unused 3D code and
+duplicate setup files have been removed. The active UI animations, menu image,
+cart, Flavour AI and root regression tests are retained.
 
-Docker (backend)
-- A `backend/Dockerfile` is included to build an image you can deploy to Railway, Heroku, or other container platforms.
-
-Notes
-- The frontend contains a lightweight 3D hero built with React Three Fiber; it is lazy-loaded and optimized for performance.
-- SEO: site includes page metadata and JSON-LD for the restaurant and menu items.
+See [FLAVOUR_AI_VERIFICATION.md](./FLAVOUR_AI_VERIFICATION.md) for actual checks,
+limits and remaining live-provider/deployment acceptance.

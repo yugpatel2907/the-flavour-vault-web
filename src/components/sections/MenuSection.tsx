@@ -28,8 +28,8 @@ export default function MenuSection() {
     const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
     const filterMatch =
       filterType === 'all' ||
-      (filterType === 'veg' && item.isVeg) ||
-      (filterType === 'nonveg' && !item.isVeg);
+      (filterType === 'veg' && item.isVeg === true) ||
+      (filterType === 'nonveg' && item.isVeg === false);
     const searchMatch =
       searchQuery === '' ||
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -47,7 +47,7 @@ export default function MenuSection() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#120F14]/90 border border-gold/30 mb-4 shadow-lg">
             <Flame className="w-3.5 h-3.5 text-saffron animate-pulse" />
             <span className="text-[11px] tracking-[0.35em] text-gold-muted uppercase font-serif font-bold">
-              AMBROCIA'S OFFICIAL HYDERABADI MENU
+              AMBROCIA&apos;S OFFICIAL HYDERABADI MENU
             </span>
           </div>
 
@@ -172,7 +172,7 @@ export default function MenuSection() {
                       <div className="flex items-center gap-2">
                         <span
                           className={`w-3 h-3 rounded-full flex-shrink-0 ${
-                            item.isVeg ? 'bg-emerald-400 ring-4 ring-emerald-400/20' : 'bg-rose-500 ring-4 ring-rose-500/20'
+                            item.isVeg === null ? 'bg-gold-muted' : item.isVeg ? 'bg-emerald-400 ring-4 ring-emerald-400/20' : 'bg-rose-500 ring-4 ring-rose-500/20'
                           }`}
                         />
                         <h3 className="font-serif text-lg font-bold text-gold-light group-hover:text-gold transition-colors">

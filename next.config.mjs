@@ -1,14 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false, // Prevents double mounting R3F canvas in dev mode
-  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
-  webpack: (config) => {
-    config.externals.push({
-      'utf-8-validate': 'commonjs utf-8-validate',
-      'bufferutil': 'commonjs bufferutil',
-    });
-    return config;
-  },
+  reactStrictMode: false, // Preserve the existing client animation mounting behavior.
 };
 
 export default nextConfig;

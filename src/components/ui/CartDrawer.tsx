@@ -6,83 +6,45 @@ import { ShoppingBag, X, Plus, Minus, Trash2, CheckCircle2, ArrowRight } from 'l
 
 export default function CartDrawer() {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, clearCart, totalItems, totalAmount } = useCart();
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [orderPlaced, setOrderPlaced] = useState(false);
-  const [checkoutStep, setCheckoutStep] = useState<'review' | 'customer' | 'submitting' | 'done'>('review');
+  const [checkoutStep, setCheckoutStep] = useState<'review' | 'customer' | 'done'>('review');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerAddress, setCustomerAddress] = useState('');
   const [orderType, setOrderType] = useState<'delivery' | 'dinein'>('delivery');
   const [tableNumber, setTableNumber] = useState('');
-  const [orderId, setOrderId] = useState<number | null>(null);
 
   if (!isCartOpen) return null;
 
-  const submitOrder = async () => {
+  const close = () => {
+    setCheckoutStep('review');
+    setIsCartOpen(false);
+  };
+
+  const completeDemo = () => {
     if (cart.length === 0) return;
-    if (!customerPhone) {
+    if (!customerPhone.trim()) {
       alert('Please provide your mobile number.');
       return;
     }
 
-    if (orderType === 'delivery' && !customerAddress) {
+    if (orderType === 'delivery' && !customerAddress.trim()) {
       alert('Please provide the delivery address.');
       return;
     }
 
-    if (orderType === 'dinein' && !tableNumber) {
+    if (orderType === 'dinein' && !tableNumber.trim()) {
       alert('Please provide the table number for dine-in.');
       return;
     }
 
-    setCheckoutStep('submitting');
-
-    const payload = {
-      items: cart.map((c) => ({ id: c.menuItem.id, name: c.menuItem.name, price: c.menuItem.price, quantity: c.quantity })),
-      customer: { phone: customerPhone },
-      order_type: orderType,
-      address: orderType === 'delivery' ? customerAddress : null,
-      table_number: orderType === 'dinein' ? tableNumber : null,
-      total: totalAmount,
-    };
-
-    const endpoints = ['/api/orders', 'http://localhost:4000/api/orders'];
-    let success = false;
-    let respJson: any = null;
-
-    for (const url of endpoints) {
-      try {
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error('bad status ' + res.status);
-        respJson = await res.json();
-        success = true;
-        break;
-      } catch (e) {
-        // try next endpoint
-      }
-    }
-
-    if (success) {
-      setOrderId(respJson?.id ?? null);
-      setOrderPlaced(true);
-      setCheckoutStep('done');
-      clearCart();
-      setIsCartOpen(false);
-      setTimeout(() => setOrderPlaced(false), 5000);
-    } else {
-      alert('Failed to place order. Please try again or call the restaurant phone number.');
-      setCheckoutStep('customer');
-    }
+    // Demonstration only: no network request, storage, payment or order creation.
+    setCheckoutStep('done');
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden font-sans">
+    <div role="dialog" aria-modal="true" aria-labelledby="cart-title" className="fixed inset-0 z-50 overflow-hidden font-sans">
       {/* Backdrop */}
       <div
-        onClick={() => setIsCartOpen(false)}
+        onClick={close}
         className="absolute inset-0 bg-[#0A0A0C]/85 backdrop-blur-md transition-opacity"
       />
 
@@ -94,30 +56,33 @@ export default function CartDrawer() {
             <div className="flex items-center justify-between pb-6 border-b border-gold/20">
               <div className="flex items-center gap-3">
                 <ShoppingBag className="w-5 h-5 text-gold" />
-                <h2 className="font-serif text-xl font-bold tracking-wider text-gold-gradient uppercase">
+                <h2 id="cart-title" className="font-serif text-xl font-bold tracking-wider text-gold-gradient uppercase">
                   YOUR ORDER ({totalItems})
                 </h2>
               </div>
               <button
-                onClick={() => setIsCartOpen(false)}
+                aria-label="Close cart"
+                onClick={close}
                 className="w-8 h-8 rounded-full bg-[#0A0A0C] border border-gold/30 flex items-center justify-center text-gold-muted hover:text-gold transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Order Placed Success View */}
-            {orderPlaced ? (
+            <p className="mt-4 text-xs text-gold-muted" role="note">Demo checkout — orders are not sent or saved. Do not enter real personal details.</p>
+
+            {/* Demo completion view */}
+            {checkoutStep === 'done' ? (
               <div className="py-16 text-center">
                 <CheckCircle2 className="w-16 h-16 text-gold mx-auto animate-bounce mb-4" />
                 <h3 className="font-serif text-2xl font-bold text-gold-gradient mb-2">
-                  ORDER CONFIRMED!
+                  DEMO CHECKOUT COMPLETE
                 </h3>
                 <p className="text-xs text-gold-light/80 leading-relaxed max-w-xs mx-auto font-sans">
-                  Your authentic Hyderabadi feast is being prepared in charcoal wood-fired clay handis.
+                  No order was sent or saved, and no payment was taken. Your cart is still available. Call +91 94442 54893 to place a real order.
                 </p>
                 <button
-                  onClick={() => setOrderPlaced(false)}
+                  onClick={() => setCheckoutStep('review')}
                   className="mt-5 px-4 py-2 rounded-full border border-gold/30 text-[10px] font-serif uppercase tracking-[0.25em] text-gold-muted hover:text-gold transition-colors"
                 >
                   CONTINUE SHOPPING
@@ -129,7 +94,7 @@ export default function CartDrawer() {
                 <p className="font-serif text-sm uppercase tracking-widest">YOUR CART IS EMPTY</p>
                 <p className="text-xs mt-1 text-gold-muted/60">Add items from the menu to build your order.</p>
                 <button
-                  onClick={() => setIsCartOpen(false)}
+                  onClick={close}
                   className="mt-6 px-5 py-2.5 rounded-full border border-gold/30 bg-[#0A0A0C] text-[10px] font-serif uppercase tracking-[0.25em] text-gold hover:text-gold-light transition-colors"
                 >
                   CONTINUE SHOPPING
@@ -145,7 +110,7 @@ export default function CartDrawer() {
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className={`w-2 h-2 rounded-full ${item.menuItem.isVeg ? 'bg-gold' : 'bg-rose-500'}`} />
+                        <span title={item.menuItem.isVeg === null ? 'Dietary details unavailable' : item.menuItem.isVeg ? 'Vegetarian' : 'Non-vegetarian'} className={`w-2 h-2 rounded-full ${item.menuItem.isVeg === null ? 'bg-gold-muted' : item.menuItem.isVeg ? 'bg-gold' : 'bg-rose-500'}`} />
                         <h4 className="font-serif text-sm font-bold text-gold-light line-clamp-1">
                           {item.menuItem.name}
                         </h4>
@@ -158,6 +123,7 @@ export default function CartDrawer() {
                     {/* Quantity Controls */}
                     <div className="flex items-center gap-2 bg-[#120F14] p-1.5 rounded-full border border-gold/30">
                       <button
+                        aria-label={`Decrease quantity of ${item.menuItem.name}`}
                         onClick={() => updateQuantity(item.menuItem.id, item.quantity - 1)}
                         className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-gold/20 text-gold transition-colors"
                       >
@@ -165,6 +131,7 @@ export default function CartDrawer() {
                       </button>
                       <span className="font-serif text-xs font-bold px-1">{item.quantity}</span>
                       <button
+                        aria-label={`Increase quantity of ${item.menuItem.name}`}
                         onClick={() => updateQuantity(item.menuItem.id, item.quantity + 1)}
                         className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-gold/20 text-gold transition-colors"
                       >
@@ -173,6 +140,7 @@ export default function CartDrawer() {
                     </div>
 
                     <button
+                      aria-label={`Remove ${item.menuItem.name} from cart`}
                       onClick={() => removeFromCart(item.menuItem.id)}
                       className="text-gold-muted/50 hover:text-rose-400 p-1 transition-colors"
                     >
@@ -185,7 +153,7 @@ export default function CartDrawer() {
           </div>
 
           {/* Cart Footer */}
-          {cart.length > 0 && !orderPlaced && (
+          {cart.length > 0 && checkoutStep !== 'done' && (
             <div className="pt-6 border-t border-gold/20 space-y-4">
               <div className="flex justify-between items-center font-serif">
                 <span className="text-xs uppercase tracking-widest text-gold-muted">SUBTOTAL</span>
@@ -195,7 +163,7 @@ export default function CartDrawer() {
               {checkoutStep === 'review' && (
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => setIsCartOpen(false)}
+                    onClick={close}
                     className="py-3 px-4 rounded-xl bg-[#0A0A0C] border border-gold/20 text-xs font-serif uppercase tracking-wider text-gold-muted hover:text-gold transition-colors"
                   >
                     CONTINUE SHOPPING
@@ -233,34 +201,32 @@ export default function CartDrawer() {
                   </div>
 
                   <div>
-                    <label className="text-[11px] text-gold-muted">Phone (mobile)</label>
-                    <input value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} className="w-full mt-1 p-2 rounded bg-[#0A0A0C] border border-gold/20 text-gold-light text-sm" />
+                    <label htmlFor="demo-phone" className="text-[11px] text-gold-muted">Phone (demo)</label>
+                    <input id="demo-phone" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} className="w-full mt-1 p-2 rounded bg-[#0A0A0C] border border-gold/20 text-gold-light text-sm" />
                   </div>
 
                   {orderType === 'delivery' && (
                     <div>
-                      <label className="text-[11px] text-gold-muted">Delivery Address</label>
-                      <input value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} className="w-full mt-1 p-2 rounded bg-[#0A0A0C] border border-gold/20 text-gold-light text-sm" />
+                      <label htmlFor="demo-address" className="text-[11px] text-gold-muted">Delivery Address (demo)</label>
+                      <input id="demo-address" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} className="w-full mt-1 p-2 rounded bg-[#0A0A0C] border border-gold/20 text-gold-light text-sm" />
                     </div>
                   )}
 
                   {orderType === 'dinein' && (
                     <div>
-                      <label className="text-[11px] text-gold-muted">Table Number</label>
-                      <input value={tableNumber} onChange={(e) => setTableNumber(e.target.value)} className="w-full mt-1 p-2 rounded bg-[#0A0A0C] border border-gold/20 text-gold-light text-sm" />
+                      <label htmlFor="demo-table" className="text-[11px] text-gold-muted">Table Number (demo)</label>
+                      <input id="demo-table" value={tableNumber} onChange={(e) => setTableNumber(e.target.value)} className="w-full mt-1 p-2 rounded bg-[#0A0A0C] border border-gold/20 text-gold-light text-sm" />
                     </div>
                   )}
 
                   <div className="flex items-center gap-2">
                     <button onClick={() => setCheckoutStep('review')} className="py-3 px-4 rounded-xl bg-[#0A0A0C] border border-gold/20 text-xs font-serif uppercase tracking-wider text-gold-muted hover:text-gold transition-colors">BACK</button>
-                    <button onClick={submitOrder} className="flex-1 py-3.5 px-6 rounded-xl bg-gradient-to-r from-saffron via-saffron-light to-gold text-[#0A0A0C] font-serif text-xs tracking-[0.2em] uppercase font-bold flex items-center justify-center gap-2 transition-all shadow-xl shadow-saffron/30 hover:scale-[1.02]">PLACE ORDER</button>
+                    <button onClick={completeDemo} className="flex-1 py-3.5 px-6 rounded-xl bg-gradient-to-r from-saffron via-saffron-light to-gold text-[#0A0A0C] font-serif text-xs tracking-[0.2em] uppercase font-bold flex items-center justify-center gap-2 transition-all shadow-xl shadow-saffron/30 hover:scale-[1.02]">COMPLETE DEMO CHECKOUT</button>
                   </div>
                 </div>
               )}
 
-              {checkoutStep === 'submitting' && (
-                <div className="py-4 text-center text-sm">Placing your order...</div>
-              )}
+
             </div>
           )}
         </div>

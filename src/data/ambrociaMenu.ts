@@ -3,7 +3,7 @@ export interface MenuItem {
   name: string;
   category: 'biryani' | 'bucket' | 'starters-nonveg' | 'starters-veg' | 'curries-nonveg' | 'curries-veg' | 'rotis' | 'kebabs-nonveg' | 'kebabs-veg' | 'tandoori' | 'chinese';
   price: number;
-  isVeg: boolean;
+  isVeg: boolean | null;
   spicyLevel?: 1 | 2 | 3;
   description?: string;
   spiceModelType?: 'star-anise' | 'clove' | 'cardamom' | 'chilli' | 'ember' | 'pot';
@@ -147,10 +147,10 @@ export const ambrociaMenu: MenuItem[] = [
   { id: 'tg4', name: 'Grill Chicken Half', category: 'tandoori', price: 230, isVeg: false, spicyLevel: 2, description: 'Half charcoal flame grilled chicken.' },
 
   // --- CHINESE SPECIALTIES ---
-  { id: 'c1', name: 'Veg Noodles / Egg Noodles', category: 'chinese', price: 145, isVeg: true, spicyLevel: 1, description: 'Wok tossed noodles with fresh veggies or egg.' },
-  { id: 'c2', name: 'Schezwan Veg / Egg Noodles', category: 'chinese', price: 155, isVeg: true, spicyLevel: 3, description: 'Spicy Schezwan sauce tossed noodles.' },
-  { id: 'c3', name: 'Veg Fried Rice / Egg Fried Rice', category: 'chinese', price: 145, isVeg: true, spicyLevel: 1, description: 'Classic wok-fried rice.' },
-  { id: 'c4', name: 'Schezwan Veg / Egg Fried Rice', category: 'chinese', price: 155, isVeg: true, spicyLevel: 3, description: 'Fiery Schezwan fried rice.' },
+  { id: 'c1', name: 'Veg Noodles / Egg Noodles', category: 'chinese', price: 145, isVeg: null, spicyLevel: 1, description: 'Wok tossed noodles with fresh veggies or egg.' },
+  { id: 'c2', name: 'Schezwan Veg / Egg Noodles', category: 'chinese', price: 155, isVeg: null, spicyLevel: 3, description: 'Spicy Schezwan sauce tossed noodles.' },
+  { id: 'c3', name: 'Veg Fried Rice / Egg Fried Rice', category: 'chinese', price: 145, isVeg: null, spicyLevel: 1, description: 'Classic wok-fried rice.' },
+  { id: 'c4', name: 'Schezwan Veg / Egg Fried Rice', category: 'chinese', price: 155, isVeg: null, spicyLevel: 3, description: 'Fiery Schezwan fried rice.' },
   { id: 'c5', name: 'Chicken Noodles', category: 'chinese', price: 175, isVeg: false, spicyLevel: 1, description: 'Stir fried noodles with shredded chicken.' },
   { id: 'c6', name: 'Schezwan Chicken Noodles', category: 'chinese', price: 185, isVeg: false, spicyLevel: 3, description: 'Wok tossed noodles with shredded chicken and fiery red Schezwan sauce.' },
   { id: 'c7', name: 'Chicken Fried Rice', category: 'chinese', price: 175, isVeg: false, spicyLevel: 1, description: 'Classic wok-fried rice with egg, tender chicken, and vegetables.' },

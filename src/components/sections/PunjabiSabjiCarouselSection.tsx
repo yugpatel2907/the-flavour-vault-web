@@ -6,15 +6,26 @@ import { punjabiSabjiDishes } from "@/data/punjabiSabjiData";
 import { useCart } from "@/context/CartContext";
 import { Flame, CheckCircle2, ShoppingBag, Award } from "lucide-react";
 import { audioSynthesizer } from "@/lib/audioSynthesizer";
+import { useMenu } from "@/lib/useMenu";
 
 export default function PunjabiSabjiCarouselSection() {
   const { addToCart } = useCart();
+  const { menu, authoritative } = useMenu();
   const [activeDish, setActiveDish] = useState<CylinderItem>(punjabiSabjiDishes[0]);
   const [addedToast, setAddedToast] = useState<string | null>(null);
 
   const handleAddToCart = (dish: CylinderItem) => {
+    // PostgreSQL uses numeric IDs. Resolve the existing carousel record to the
+    // active menu so normal ordering and AI use the same authoritative identity.
+    const item = menu.find(item => item.id === dish.id) ||
+      menu.find(item => item.name === dish.name && item.price === dish.price);
+    if (authoritative && !item) {
+      setAddedToast('This dish is unavailable on the current menu.');
+      setTimeout(() => setAddedToast(null), 2500);
+      return;
+    }
     audioSynthesizer.playSizzle();
-    addToCart({
+    addToCart(item || {
       id: dish.id,
       name: dish.name,
       category: "curries-veg",
@@ -48,7 +59,7 @@ export default function PunjabiSabjiCarouselSection() {
           </h2>
 
           <p className="mt-4 text-gold-light/80 text-sm sm:text-base font-sans leading-relaxed">
-            Explore our highest-rated & most ordered Punjabi Sabjis, Biryanis, and Chef's Royal Specialities.
+            Explore our highest-rated & most ordered Punjabi Sabjis, Biryanis, and Chef&apos;s Royal Specialities.
           </p>
         </div>
 

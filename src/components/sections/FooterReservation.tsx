@@ -67,17 +67,18 @@ export default function FooterReservation() {
               <div className="py-12 text-center">
                 <CheckCircle2 className="w-16 h-16 text-gold mx-auto animate-bounce mb-4" />
                 <h3 className="font-serif text-2xl font-bold text-gold-gradient mb-2">
-                  RESERVATION REQUESTED!
+                  DEMO RESERVATION COMPLETE
                 </h3>
                 <p className="text-xs text-gold-light/80 max-w-xs mx-auto">
-                  Our Maitre d' will call you shortly on {formData.phone} to confirm your table.
+                  No reservation was sent or saved. Call +91 94442 54893 to reserve a real table.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <h3 className="font-serif text-lg font-bold text-gold uppercase tracking-wider mb-4 border-b border-gold/20 pb-2">
-                  BOOK YOUR DINING EXPERIENCE
+                  TRY THE RESERVATION DEMO
                 </h3>
+                <p className="text-xs text-gold-muted">Demo only. Do not enter real personal details. Call the restaurant to book.</p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -148,7 +149,7 @@ export default function FooterReservation() {
                   type="submit"
                   className="w-full py-4 rounded-xl bg-gradient-to-r from-saffron via-saffron-light to-gold text-[#0A0A0C] font-serif text-xs tracking-[0.25em] uppercase font-bold shadow-xl shadow-saffron/30 hover:scale-[1.01] transition-all mt-4"
                 >
-                  CONFIRM ROYAL RESERVATION
+                  COMPLETE RESERVATION DEMO
                 </button>
               </form>
             )}
@@ -159,7 +160,7 @@ export default function FooterReservation() {
       {/* Footer Bottom */}
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-serif text-gold-muted">
         <div>
-          © 2026 AMBROCIA'S RESTAURANT. ALL RIGHTS RESERVED.
+          © 2026 AMBROCIA&apos;S RESTAURANT. ALL RIGHTS RESERVED.
         </div>
         <div className="flex items-center gap-2">
           <span>AUTHENTIC HYDERABADI GASTRONOMY</span>
